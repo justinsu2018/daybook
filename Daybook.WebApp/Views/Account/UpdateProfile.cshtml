@@ -1,0 +1,34 @@
+﻿@model Daybook.WebApp.Core.ViewModels.UserProfileFormViewModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+}
+
+@using (Html.BeginForm("UpdateProfile", "Account"))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(m => m.NickName)
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.NickName, new { @class = "form-control", @autocomplete = "off" })
+        @Html.ValidationMessageFor(m => m.NickName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PrimaryCurrency)
+        @Html.DropDownListFor(m => m.PrimaryCurrency, new SelectList(Model.USRCurrencies, "CurrencyID", "Name"), "", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-xs">Save</button>
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

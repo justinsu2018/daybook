@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daybook.Core", "Daybook.Core\Daybook.Core.csproj", "{1CAD7743-3302-4BB0-B951-EEEFAE30F8DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daybook.WebApp", "Daybook.WebApp\Daybook.WebApp.csproj", "{BAF71551-E0A9-43DE-8476-A22896CBDEC5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1CAD7743-3302-4BB0-B951-EEEFAE30F8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CAD7743-3302-4BB0-B951-EEEFAE30F8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CAD7743-3302-4BB0-B951-EEEFAE30F8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CAD7743-3302-4BB0-B951-EEEFAE30F8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF71551-E0A9-43DE-8476-A22896CBDEC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF71551-E0A9-43DE-8476-A22896CBDEC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF71551-E0A9-43DE-8476-A22896CBDEC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF71551-E0A9-43DE-8476-A22896CBDEC5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1938C56D-5409-49CC-B926-24AB17C324A5}
+	EndGlobalSection
+EndGlobal

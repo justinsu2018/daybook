@@ -1,0 +1,41 @@
+﻿@model Daybook.WebApp.Core.ViewModels.PlanFormViewModel
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("ViewPlan", "Plan", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(m => m.PlanningName)
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.PlanningName, new { @class = "form-control", @autocomplete = "off" })
+        @Html.ValidationMessageFor(m => m.PlanningName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DueDate)
+        @Html.EditorFor(m => m.DueDate, new { @class = "form-control", @placeholder = "yyyy/MM" })
+        @Html.ValidationMessageFor(m => m.DueDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CurrencyID)
+        @Html.DropDownListFor(m => m.CurrencyID, new SelectList(Model.Currencies, "CurrencyID", "Name"), "", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.RecentBaalance)
+        @Html.TextBoxFor(m => m.RecentBaalance, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RecentBaalance)
+    </div>
+
+    <button type="submit" name="ReturnList" value="ReturnList" class="btn btn-default btn-xs">Cancel</button>
+
+    if (String.IsNullOrEmpty(Model.PlanningID))
+    {
+        <button type="submit" name="NewPlan" value="NewPlan" class="btn btn-primary btn-xs">Save</button>
+    }
+    else
+    {
+        @Html.HiddenFor(m => m.PlanningID)
+        <button type="submit" name="DeletePlan" value="DeletePlan" class="btn btn-danger btn-xs">Delete</button>
+        <button type="submit" name="UpdatePlan" value="UpdatePlan" class="btn btn-secondary btn-xs">Update</button>
+    }
+}

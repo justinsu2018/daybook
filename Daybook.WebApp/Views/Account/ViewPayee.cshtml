@@ -1,0 +1,25 @@
+﻿@model Daybook.WebApp.Core.ViewModels.PayeeFormViewModel
+
+<h2>@ViewBag.Title</h2>
+
+@if (TempData["Success"] != null)
+{
+    <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
+}
+
+@using (Html.BeginForm("ViewPayee", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(m => m.PayeeName)
+    <div class="form-group">
+        @Html.TextBoxFor(m => m.PayeeName, new { @class = "form-control", @autocomplete = "off" })
+        @Html.ValidationMessageFor(m => m.PayeeName)
+    </div>
+    @Html.HiddenFor(m => m.PayeeID)
+    <button type="submit" class="btn btn-primary btn-sm">@(String.IsNullOrEmpty(Model.PayeeID) ? "Save" : "Update")</button>
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

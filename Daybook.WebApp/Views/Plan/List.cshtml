@@ -1,0 +1,73 @@
+﻿@model Daybook.WebApp.Core.ViewModels.PlansViewModel
+
+@{
+    ViewBag.Title = "List";
+
+
+}
+
+
+<h2>Plan</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Plan Amount/Currency</th>
+            <th>Recent Amount</th>
+            <th>Archives Rate</th>
+            <th>Due Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Plannings.Any())
+        {
+            foreach (var p in Model.Plannings)
+            {
+                <tr>
+                    <td>@p.PlanningName</td>
+                    <td class="text-center">
+                        @if (string.IsNullOrEmpty(p.CurrencyID))
+                        {
+                            @p.RecentBalance.ToString("c")
+                        }
+                        else
+                        {
+                            string.Format("{0} | {1}", @p.RecentBalance, @p.CurrencyID);
+                        }
+                    </td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">0</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(p.DueDate))
+                        {
+                            @p.DueDate
+                        }
+                    </td>
+                    <td>
+                        <a href='@Url.Action("ViewPlan",
+                                "Plan", new { planid = KeyGenerator.Encode(p.PlanningID) })'
+                            class="btn btn-info btn-xs">View</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">
+                    <p class="text-info">No Payee Found</p>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" class="text-right">
+                <a href='@Url.Action("AddPlan", "Plan", new { payeeid="" })'
+                   class="btn btn-primary btn-xs">Add Plan</a>
+            </td>
+        </tr>
+    </tfoot>
+</table>

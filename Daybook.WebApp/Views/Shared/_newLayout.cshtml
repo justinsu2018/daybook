@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daybook</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            @Html.Partial("_newLoginPartial")
+            <div class="navbar-default sidebar" role="navigation">
+                @Html.Partial("_newSidePartial")
+            </div>
+        </nav>
+        <div id="page-wrapper">
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>
+
+        <div class="nav nav-divider navbar-fixed-bottom col-lg-12 text-center" style="background-color:#f8f8f8">
+            &copy;@DateTime.Now.Year&nbsp;<strong>Daybook</strong>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/lab")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/app")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

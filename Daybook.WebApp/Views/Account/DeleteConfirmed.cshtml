@@ -1,0 +1,18 @@
+﻿@model Daybook.WebApp.Core.ViewModels.PayeeFormViewModel
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+@using (Html.BeginForm("DeleteConfirmed", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(m => m.PayeeName)
+    <div class="form-group">
+        @Model.PayeeName
+    </div>
+    @Html.HiddenFor(m => m.PayeeID)
+    <a href="@Url.Action("Payees", "Account")" class="btn btn-default btn-xs">Cancel</a>
+    <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+}
+

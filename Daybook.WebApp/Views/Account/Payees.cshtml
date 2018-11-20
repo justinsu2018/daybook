@@ -1,0 +1,79 @@
+﻿@model Daybook.WebApp.Core.ViewModels.PayeesViewModel
+
+@{
+    ViewBag.Title = "Payee";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Payees.Any())
+        {
+            foreach (var payee in Model.Payees)
+            {
+                <tr>
+                    <td class="text-center">
+                        @payee.PayeeName
+                    </td>
+                    <td class="text-right">
+                        @*<button type="button" class="btn btn-danger btn-xs js-delete-payee" data-payee-id="@KeyGenerator.Encode(payee.PayeeID)">Delete</button>*@
+                        <a href='@Url.Action("PayeeConfirmed",
+                                "Account", new { payeeid = KeyGenerator.Encode(payee.PayeeID) })'
+                           class="btn btn-danger btn-xs">Delete</a>
+                        <a href='@Url.Action("ViewPayee",
+                                "Account", new { payeeid = KeyGenerator.Encode(payee.PayeeID) })'
+                           class="btn btn-info btn-xs">View</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">
+                    <p class="text-info">No Payee Found</p>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tbody>
+        <tr>
+            <td colspan="2" class="text-right">
+                <a href='@Url.Action("ViewPayee", "Account", new { payeeid="" })'
+                   class="btn btn-primary btn-xs">Add Payee</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@section scripts {
+    @*<script>
+        $(document).ready(function () {
+            $(".js-delete-payee").click(function (e) {
+                //alert($(this).attr('data-payee-id'));
+
+                //var td_row = $(e.target);
+
+                $.ajax({
+                    url: "/api/member/" + $(this).attr("data-payee-id"),
+                    method: "DELETE",
+                    contentType: "application/json"
+                })
+                    .done(function () {
+
+                        $(this).parent("tr").remove();
+                    })
+                    .fail(function () {
+                        alert("Something failed!");
+                    });
+            });
+        });
+    </script>*@
+}
