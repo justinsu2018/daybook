@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Daybook.Core.Models;
+﻿using Daybook.Core.Models;
+using System.Collections.Generic;
 
 namespace Daybook.WebApp.Repostories
 {

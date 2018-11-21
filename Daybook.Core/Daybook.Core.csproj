@@ -99,6 +99,7 @@
     <Compile Include="Models\ActivityLog.cs" />
     <Compile Include="Models\MemberType.cs" />
     <Compile Include="Models\Payee.cs" />
+    <Compile Include="Models\PlanKind.cs" />
     <Compile Include="Models\Planning.cs" />
     <Compile Include="Models\SubscriptedType.cs" />
     <Compile Include="Models\SYSBookCategory.cs" />

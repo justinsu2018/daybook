@@ -6,14 +6,18 @@
 {
     @Html.AntiForgeryToken()
 
-    @Html.LabelFor(m => m.PlanningName)
     <div class="form-group">
+        @Html.LabelFor(m=>m.PlanKind)
+        @Html.EnumDropDownListFor(m=>m.PlanKind, new { @class="form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PlanningName)
         @Html.TextBoxFor(m => m.PlanningName, new { @class = "form-control", @autocomplete = "off" })
         @Html.ValidationMessageFor(m => m.PlanningName)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.DueDate)
-        @Html.EditorFor(m => m.DueDate, new { @class = "form-control", @placeholder = "yyyy/MM" })
+        @Html.TextBoxFor(m => m.DueDate, new { @class = "form-control", @placeholder = "yyyy/MM" })
         @Html.ValidationMessageFor(m => m.DueDate)
     </div>
     <div class="form-group">
@@ -21,9 +25,9 @@
         @Html.DropDownListFor(m => m.CurrencyID, new SelectList(Model.Currencies, "CurrencyID", "Name"), "", new { @class = "form-control" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.RecentBaalance)
-        @Html.TextBoxFor(m => m.RecentBaalance, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.RecentBaalance)
+        @Html.LabelFor(m => m.RecentBalance)
+        @Html.TextBoxFor(m => m.RecentBalance, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.RecentBalance)
     </div>
 
     <button type="submit" name="ReturnList" value="ReturnList" class="btn btn-default btn-xs">Cancel</button>

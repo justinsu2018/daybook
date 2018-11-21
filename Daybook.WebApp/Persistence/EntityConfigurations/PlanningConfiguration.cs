@@ -30,6 +30,9 @@ namespace Daybook.WebApp.Persistence.EntityConfigurations
                 .HasMaxLength(255)
                 .IsUnicode(true);
 
+            Property(p => p.PlanKind)
+                .IsOptional();
+
             HasKey(p => new { p.PlanningID, p.UserID });
                 
 

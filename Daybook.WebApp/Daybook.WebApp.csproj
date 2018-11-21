@@ -218,11 +218,14 @@
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\ViewModels\PayeeFormViewModel.cs" />
     <Compile Include="Core\ViewModels\PayeesViewModel.cs" />
+    <Compile Include="Core\ViewModels\Validations\AmountValidation.cs" />
+    <Compile Include="Core\ViewModels\Validations\FutureDateValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Core\ViewModels\AccountViewModels.cs" />
     <Compile Include="Core\ViewModels\ManageViewModels.cs" />
+    <Compile Include="Helper\HtmlExtensions.cs" />
     <Compile Include="Persistence\Migrations\201811201114433_Initial_Daybook.cs" />
     <Compile Include="Persistence\Migrations\201811201114433_Initial_Daybook.Designer.cs">
       <DependentUpon>201811201114433_Initial_Daybook.cs</DependentUpon>
@@ -230,6 +233,14 @@
     <Compile Include="Persistence\Migrations\201811201333250_PopulateCurrencies.cs" />
     <Compile Include="Persistence\Migrations\201811201333250_PopulateCurrencies.Designer.cs">
       <DependentUpon>201811201333250_PopulateCurrencies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201811210737371_ADD_PLANKIND_INTO_PLANNING.cs" />
+    <Compile Include="Persistence\Migrations\201811210737371_ADD_PLANKIND_INTO_PLANNING.Designer.cs">
+      <DependentUpon>201811210737371_ADD_PLANKIND_INTO_PLANNING.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.cs" />
+    <Compile Include="Persistence\Migrations\201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.Designer.cs">
+      <DependentUpon>201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\PayeeConfiguration.cs" />
@@ -451,6 +462,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201811201333250_PopulateCurrencies.resx">
       <DependentUpon>201811201333250_PopulateCurrencies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201811210737371_ADD_PLANKIND_INTO_PLANNING.resx">
+      <DependentUpon>201811210737371_ADD_PLANKIND_INTO_PLANNING.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.resx">
+      <DependentUpon>201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

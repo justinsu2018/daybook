@@ -45,6 +45,7 @@ namespace Daybook.WebApp.Repostories
             if (orgPlan == null)
                 throw new KeyNotFoundException();
 
+            orgPlan.PlanKind = plan.PlanKind;
             orgPlan.PlanningName = plan.PlanningName;
             orgPlan.DueDate = plan.DueDate;
             orgPlan.CurrencyID = plan.CurrencyID;
@@ -54,13 +55,11 @@ namespace Daybook.WebApp.Repostories
 
         public void DeletePlan(string planid)
         {
-            var plan = _context.Plannings
-                .SingleOrDefault(p => p.PlanningID == planid);
-
-            if (plan == null)
+            var op = _context.Plannings.SingleOrDefault(p => p.PlanningID == planid);
+            if (op == null)
                 throw new KeyNotFoundException();
 
-            _context.Plannings.Remove(plan);
+            _context.Plannings.Remove(op);
         }
     }
 }

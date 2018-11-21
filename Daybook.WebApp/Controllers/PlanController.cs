@@ -54,9 +54,10 @@ namespace Daybook.WebApp.Controllers
             var viewModel = new PlanFormViewModel
             {
                 PlanningID = planid,
+                PlanKind = p.PlanKind,
                 PlanningName = p.PlanningName,
                 DueDate = p.DueDate,
-                RecentBaalance = p.RecentBalance,
+                RecentBalance = p.RecentBalance,
                 CurrencyID = p.CurrencyID,
                 Currencies = _unitOfWork.MemberRepository.GetCurrencies(),
             };
@@ -76,13 +77,24 @@ namespace Daybook.WebApp.Controllers
             var actionMode = string.IsNullOrEmpty(viewModel.PlanningID) ? "A" : "U";
             Planning plan = new Planning();
 
-            plan.PlanningID = KeyGenerator.GetUniqKey(User.Identity.GetUserId());
-            plan.PlanningName = viewModel.PlanningName;
-            plan.DueDate = viewModel.DueDate;
-            plan.RecentBalance = viewModel.RecentBaalance;
-            plan.CreatedBy = User.Identity.GetUserId();
-            plan.UserID = User.Identity.GetUserId();
+            if (string.IsNullOrEmpty(viewModel.PlanningID))
+            {
+                //Add
+                plan.PlanningID = KeyGenerator.GetUniqKey(User.Identity.GetUserId());
+                plan.CreatedBy = User.Identity.GetUserId();
+            }
+            else
+            {
+                //Update & Delete
+                plan.PlanningID = KeyGenerator.Decode(viewModel.PlanningID);
+            }
+
+            plan.PlanKind = viewModel.PlanKind;
             plan.CurrencyID = viewModel.CurrencyID;
+            plan.RecentBalance = viewModel.RecentBalance;
+            plan.DueDate = viewModel.DueDate;
+            plan.PlanningName = viewModel.PlanningName;
+            plan.UserID = User.Identity.GetUserId();
 
             switch (actionMode)
             {
@@ -135,6 +147,12 @@ namespace Daybook.WebApp.Controllers
                     ModelState.AddModelError("PlanningID", "PlanningID is mandatory");
                 }
 
+                var p = _unitOfWork.PlanRepository.GetPlanByPlanID(KeyGenerator.Decode(viewModel.PlanningID));
+                if (p == null)
+                {
+                    ModelState.AddModelError("PlanningID", "No reocrd to update.");
+                }
+
                 if (!ModelState.IsValid)
                 {
                     viewModel.Currencies = _unitOfWork.MemberRepository.GetCurrencies();
@@ -151,7 +169,9 @@ namespace Daybook.WebApp.Controllers
             {
                 if (!string.IsNullOrEmpty(viewModel.PlanningID))
                 {
-                    _unitOfWork.PlanRepository.DeletePlan(viewModel.PlanningID);
+                    _unitOfWork.PlanRepository.DeletePlan(KeyGenerator.Decode(viewModel.PlanningID));
+
+                    _unitOfWork.Complete();
                 }
             }
 
