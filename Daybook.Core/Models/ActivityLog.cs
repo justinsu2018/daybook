@@ -8,17 +8,16 @@ namespace Daybook.Core.Models
 
         public DateTime LogDate { get; set; }
 
-        public ActivityType ActivityType {get; set;}
+        public ActivityType ActivityType { get; set; }
 
         public float Income { get; set; }
-        
+
         public float Expense { get; set; }
 
         public string UserID { get; set; }
-        public ApplicationUser User { get; set; }
 
-        public string PlanningID { get; set; }
-        public Planning Planning { get;  set; }
-        
+        public string CurrencyID { get; set; }
+
+        public ActivityLogRelation ActivityLogRelation { get; set; }
     }
 }

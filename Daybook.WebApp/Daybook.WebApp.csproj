@@ -19,7 +19,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44358</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CustomRequireHttpsFilter.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\KeyGenerator.cs" />
@@ -211,11 +212,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\Api\MemberController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\ViewModels\ActivityLogFormViewModel.cs" />
+    <Compile Include="Core\ViewModels\DashboardViewModel.cs" />
     <Compile Include="Core\ViewModels\PayeeFormViewModel.cs" />
     <Compile Include="Core\ViewModels\PayeesViewModel.cs" />
     <Compile Include="Core\ViewModels\Validations\AmountValidation.cs" />
@@ -226,6 +230,8 @@
     <Compile Include="Core\ViewModels\AccountViewModels.cs" />
     <Compile Include="Core\ViewModels\ManageViewModels.cs" />
     <Compile Include="Helper\HtmlExtensions.cs" />
+    <Compile Include="Persistence\EntityConfigurations\ActivityLogConfiguration.cs" />
+    <Compile Include="Persistence\EntityConfigurations\ActivityLogRelationConfiguration.cs" />
     <Compile Include="Persistence\Migrations\201811201114433_Initial_Daybook.cs" />
     <Compile Include="Persistence\Migrations\201811201114433_Initial_Daybook.Designer.cs">
       <DependentUpon>201811201114433_Initial_Daybook.cs</DependentUpon>
@@ -241,6 +247,30 @@
     <Compile Include="Persistence\Migrations\201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.cs" />
     <Compile Include="Persistence\Migrations\201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.Designer.cs">
       <DependentUpon>201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201811211309567_ADD_ActivityLog.cs" />
+    <Compile Include="Persistence\Migrations\201811211309567_ADD_ActivityLog.Designer.cs">
+      <DependentUpon>201811211309567_ADD_ActivityLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201811211311560_ADD_ActivityLog1.cs" />
+    <Compile Include="Persistence\Migrations\201811211311560_ADD_ActivityLog1.Designer.cs">
+      <DependentUpon>201811211311560_ADD_ActivityLog1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201811211331261_ADD_CURRENCYID_PLANNINGID_ActivityLog.cs" />
+    <Compile Include="Persistence\Migrations\201811211331261_ADD_CURRENCYID_PLANNINGID_ActivityLog.Designer.cs">
+      <DependentUpon>201811211331261_ADD_CURRENCYID_PLANNINGID_ActivityLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201811211346106_ADD_ACTIVITYLOGRELATION.cs" />
+    <Compile Include="Persistence\Migrations\201811211346106_ADD_ACTIVITYLOGRELATION.Designer.cs">
+      <DependentUpon>201811211346106_ADD_ACTIVITYLOGRELATION.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201811211357294_ADD_ACTIVITYLOGRELATION1.cs" />
+    <Compile Include="Persistence\Migrations\201811211357294_ADD_ACTIVITYLOGRELATION1.Designer.cs">
+      <DependentUpon>201811211357294_ADD_ACTIVITYLOGRELATION1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Migrations\201811211411021_ADD_ACTIVITYLOGRELATION2.cs" />
+    <Compile Include="Persistence\Migrations\201811211411021_ADD_ACTIVITYLOGRELATION2.Designer.cs">
+      <DependentUpon>201811211411021_ADD_ACTIVITYLOGRELATION2.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistence\Migrations\Configuration.cs" />
     <Compile Include="Persistence\EntityConfigurations\PayeeConfiguration.cs" />
@@ -349,6 +379,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="App_Code\Functions.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -432,12 +463,13 @@
     <Content Include="Views\Shared\_newLayout2.cshtml" />
     <Content Include="Views\Plan\List.cshtml" />
     <Content Include="Views\Plan\PlanForm.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Activity\NewActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Core\Models\" />
     <Folder Include="Core\Repostories\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -468,6 +500,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistence\Migrations\201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.resx">
       <DependentUpon>201811211255289_ADD_RecentAmount_And_ArchivesRate_INTO_PLANNING.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201811211309567_ADD_ActivityLog.resx">
+      <DependentUpon>201811211309567_ADD_ActivityLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201811211311560_ADD_ActivityLog1.resx">
+      <DependentUpon>201811211311560_ADD_ActivityLog1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201811211331261_ADD_CURRENCYID_PLANNINGID_ActivityLog.resx">
+      <DependentUpon>201811211331261_ADD_CURRENCYID_PLANNINGID_ActivityLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201811211346106_ADD_ACTIVITYLOGRELATION.resx">
+      <DependentUpon>201811211346106_ADD_ACTIVITYLOGRELATION.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201811211357294_ADD_ACTIVITYLOGRELATION1.resx">
+      <DependentUpon>201811211357294_ADD_ACTIVITYLOGRELATION1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistence\Migrations\201811211411021_ADD_ACTIVITYLOGRELATION2.resx">
+      <DependentUpon>201811211411021_ADD_ACTIVITYLOGRELATION2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,31 @@
+﻿@*@helper fun(object plantype)
+    {
+        // your helper can contain code and/or markup, e.g.
+        // var msg = "Hello " + name;
+        // <p>@msg</p>
+        // For more information, visit https://go.microsoft.com/fwlink/?LinkID=204658
+
+    }*@
+
+@functions {
+    public static string planstyle(object plantype, int displaytype)
+    {
+        //0: text color, 1: background color
+        string typename = Convert.ToString(plantype);
+
+        if (typename == "Spending")
+        {
+            return (displaytype == 0) ? "text-danger" : "red";
+        }
+        else if (typename == "Budget")
+        {
+            return (displaytype == 0) ? "text-success" : "green";
+        }
+        else if (typename == "GroupOfWork")
+        {
+            return (displaytype == 0) ? "text-warning" : "yellow";
+        }
+
+        return (displaytype == 0) ? "text-secondary" : "black";
+    }
+}

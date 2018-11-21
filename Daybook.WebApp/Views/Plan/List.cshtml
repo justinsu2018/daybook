@@ -1,34 +1,5 @@
 ﻿@model Daybook.WebApp.Core.ViewModels.PlansViewModel
 
-@{
-    ViewBag.Title = "List";
-
-
-}
-
-@functions {
-    public string planstyle(object plantype)
-    {
-        string typename = Convert.ToString(plantype);
-
-        if (typename == "Spending")
-        {
-            return "text-danger";
-        }
-        else if (typename == "Budget")
-        {
-            return "text-success";
-        }
-        else if (typename == "GroupOfWork")
-        {
-            return "text-warning";
-        }
-
-        return "text-secondary";
-    }
-}
-
-
 <h2>Plan</h2>
 
 <table class="table">
@@ -47,7 +18,7 @@
         {
             foreach (var p in Model.Plannings)
             {
-                <tr class="@planstyle(p.PlanKind)">
+                <tr class="@Functions.planstyle(p.PlanKind, 0)">
                     <td class="text-center">
                         @p.PlanningName
                     </td>

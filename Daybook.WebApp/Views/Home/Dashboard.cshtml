@@ -1,0 +1,23 @@
+﻿@model Daybook.WebApp.Core.ViewModels.DashboardViewModel
+
+
+<h2>@ViewBag.Title</h2>
+
+@foreach (var p in Model.Plannings)
+{
+    <div class="card">
+        <div class="card-header @Functions.planstyle(p.PlanKind, 0)">
+            <strong>@p.PlanningName</strong>
+        </div>
+        <div class="card-body">
+            <p class="card-text">Amount: @p.RecentBalance.ToString("c")</p>
+            <p class="card-text">Balance: @p.RecentAmount.ToString("c")</p>
+            @*<a href="#" class="btn btn-primary btn-xs">Add Schedule</a>*@
+
+            <a href='@Url.Action("NewActivity",
+                                "Activity", new { planid = KeyGenerator.Encode(p.PlanningID) })'
+               class="btn btn-info btn-xs">View</a>
+        </div>
+    </div>
+    <br />
+}

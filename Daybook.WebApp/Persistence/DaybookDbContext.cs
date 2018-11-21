@@ -18,6 +18,8 @@ namespace Daybook.WebApp.Persistence
         public DbSet<WorkingGroupMember> WorkingGroupMembers { get; set; }
         public DbSet<Planning> Plannings { get; set; }
         public DbSet<USRCurrency> USRCurrencies { get; set; }
+        public DbSet<ActivityLog> ActivityLogs { get; set; }
+        public DbSet<ActivityLogRelation> ActivityLogRelations { get; set; }
 
         public DaybookDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -45,6 +47,12 @@ namespace Daybook.WebApp.Persistence
             modelBuilder.Configurations.Add(new WorkingGroupConfiguration());
             modelBuilder.Configurations.Add(new WorkingGroupMemberConfiguration());
             modelBuilder.Configurations.Add(new PlanningConfiguration());
+            modelBuilder.Configurations.Add(new ActivityLogConfiguration());
+            modelBuilder.Configurations.Add(new ActivityLogRelationConfiguration());
+
+            modelBuilder.Entity<ActivityLog>()
+                .HasRequired(al => al.ActivityLogRelation)
+                .WithRequiredPrincipal(alr => alr.ActivityLog);
 
             base.OnModelCreating(modelBuilder);
         }
